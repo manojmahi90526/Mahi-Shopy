@@ -1,0 +1,375 @@
+/* ===================================================
+   MAHI SHOPY UNIVERSAL THEME SYSTEM (DARK / LIGHT)
+   =================================================== */
+
+:root {
+  --theme-transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Light Theme Variables */
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.95);
+  --bg-card: #ffffff;
+  --bg-card-border: rgba(0, 0, 0, 0.1);
+  --bg-card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --accent-cyan: #0284c7;
+  --accent-gradient: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+  --item-bg: #ffffff;
+  --item-border: #e2e8f0;
+  --item-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  --item-hover-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.12);
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-text: #0f172a;
+  --badge-bg: rgba(2, 132, 199, 0.08);
+  --badge-border: rgba(2, 132, 199, 0.2);
+  --badge-text: #0284c7;
+}
+
+/* Dark Theme Variables (Default) */
+[data-theme="dark"], :root:not([data-theme="light"]) {
+  --bg-primary: #07070a;
+  --bg-secondary: #111118;
+  --bg-header: rgba(10, 10, 15, 0.88);
+  --bg-card: rgba(25, 25, 35, 0.75);
+  --bg-card-border: rgba(255, 255, 255, 0.12);
+  --bg-card-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent-cyan: #00f2fe;
+  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --item-bg: #161922;
+  --item-border: rgba(255, 255, 255, 0.1);
+  --item-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --item-hover-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --input-border: rgba(255, 255, 255, 0.15);
+  --input-text: #f8fafc;
+  --badge-bg: rgba(255, 255, 255, 0.06);
+  --badge-border: rgba(255, 255, 255, 0.12);
+  --badge-text: #38bdf8;
+}
+
+/* Smooth transitions */
+body, header, nav, .item, .card, nav button, input, textarea, select, .btn-secondary, .user-profile-badge {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===================================================
+   LIGHT MODE PAGE-SPECIFIC OVERRIDES
+   =================================================== */
+
+[data-theme="light"] body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .background-decor {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(2, 132, 199, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 40%) !important;
+}
+
+[data-theme="light"] header {
+  background-color: var(--bg-header) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] nav button:not(#cartBtn):not(#logoutBtn) {
+  color: #1e293b !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+[data-theme="light"] nav button:not(#cartBtn):not(#logoutBtn):hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  border-color: #0284c7 !important;
+}
+
+[data-theme="light"] .zudio-header-highlight {
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+  animation: none !important;
+}
+
+[data-theme="light"] .zudio-highlight {
+  background: #fef08a !important;
+  color: #854d0e !important;
+  border-color: #facc15 !important;
+}
+
+[data-theme="light"] #zudioLogo,
+[data-theme="light"] .brand-logo {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] #userProfileDisplay,
+[data-theme="light"] #userNameDisplay {
+  color: #1e293b !important;
+}
+
+[data-theme="light"] main h1,
+[data-theme="light"] h1 {
+  color: #0f172a !important;
+  background: linear-gradient(180deg, #0f172a 0%, #334155 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="light"] .brand-highlight {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] h2 {
+  color: #1e293b !important;
+  text-shadow: none !important;
+  animation: none !important;
+}
+
+[data-theme="light"] .subtitle {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .badge {
+  background: var(--badge-bg) !important;
+  border-color: var(--badge-border) !important;
+  color: var(--badge-text) !important;
+}
+
+[data-theme="light"] .badge span {
+  background: #0284c7 !important;
+  box-shadow: 0 0 10px #0284c7 !important;
+}
+
+[data-theme="light"] .item {
+  background: var(--item-bg) !important;
+  border: 1px solid var(--item-border) !important;
+  box-shadow: var(--item-shadow) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .item:hover {
+  box-shadow: var(--item-hover-shadow) !important;
+}
+
+[data-theme="light"] .item h3 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .item p {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .card {
+  background: var(--bg-card) !important;
+  border-color: var(--bg-card-border) !important;
+  box-shadow: var(--bg-card-shadow) !important;
+}
+
+[data-theme="light"] .card h2,
+[data-theme="light"] .card h3 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .card p {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .btn-secondary {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #e2e8f0 !important;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  border-color: var(--input-border) !important;
+}
+
+[data-theme="light"] #backgroundVideo {
+  opacity: 0.12;
+  filter: brightness(1.2);
+}
+
+/* Light mode for Cart & Profile pages */
+[data-theme="light"] .cart-summary-card,
+[data-theme="light"] .cart-item-card,
+[data-theme="light"] .profile-card,
+[data-theme="light"] .checkout-modal-content,
+[data-theme="light"] .orders-modal-content {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Admin Light Mode */
+[data-theme="light"] .admin-container,
+[data-theme="light"] form {
+  background: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* ===================================================
+   PROFILE COMPONENT STYLING
+   =================================================== */
+
+.user-profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+[data-theme="light"] .user-profile-badge {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.user-profile-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 242, 254, 0.15);
+  border-color: #00f2fe;
+  box-shadow: 0 4px 18px rgba(0, 242, 254, 0.3);
+}
+
+[data-theme="light"] .user-profile-badge:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+  box-shadow: 0 4px 18px rgba(2, 132, 199, 0.2);
+}
+
+.user-profile-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #00f2fe;
+}
+
+/* Header right controls wrapper */
+.header-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+/* ===================================================
+   RIGHT CORNER THEME TOGGLE COMPONENT
+   =================================================== */
+
+.mahi-theme-toggle-container {
+  position: fixed;
+  top: 16px;
+  right: 18px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.mahi-theme-toggle-header-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mahi-theme-toggle-btn {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #f8fafc;
+  padding: 6px 14px 6px 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 242, 254, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  user-select: none;
+}
+
+[data-theme="light"] .mahi-theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(2, 132, 199, 0.3);
+  color: #0f172a;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08), 0 0 15px rgba(2, 132, 199, 0.15);
+}
+
+.mahi-theme-toggle-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: #00f2fe;
+  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35);
+}
+
+[data-theme="light"] .mahi-theme-toggle-btn:hover {
+  border-color: #0284c7;
+  box-shadow: 0 10px 30px rgba(2, 132, 199, 0.25);
+}
+
+.mahi-theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.mahi-theme-icon-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+[data-theme="light"] .mahi-theme-icon-slot {
+  background: #fef08a;
+  transform: rotate(360deg);
+}
+
+.mahi-theme-label {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}

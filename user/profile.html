@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="../theme-toggle.css" />
+  <script src="../theme-toggle.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #000000;
+      color: #ffffff;
+      padding: 2rem;
+      text-align: center;
+    }
+    header {
+      background-color: #000000;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    button {
+      background-color: #dc3545;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #c82333;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    .profile-info {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #222222;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    .profile-info p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
+    <a href="home.html" style="font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none;">Mahi Shopy</a>
+    <div style="display: flex; gap: 0.75rem; align-items: center;">
+      <button id="homeBtn" onclick="location.href='home.html'" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Home</button>
+      <button id="cartBtn" onclick="location.href='cart.html'" style="background-color: #ffc107; border: none; color: black; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;">🛒 Cart</button>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </header>
+  <h1>User Profile</h1>
+  <div class="profile-info" id="profileInfo">
+    <form id="profileForm">
+      <label for="name">Name:</label><br/>
+      <input type="text" id="name" name="name" required /><br/><br/>
+      
+      <label for="gender">Gender:</label><br/>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select><br/><br/>
+      
+      <label for="photoUrl">Photo URL:</label><br/>
+      <input type="url" id="photoUrl" name="photoUrl" /><br/><br/>
+      
+      <label for="address">Delivery Address:</label><br/>
+      <textarea id="address" name="address" rows="3" required></textarea><br/><br/>
+      
+      <button type="submit">Save Profile</button>
+    </form>
+    <div id="profileDisplay" style="display:none;">
+      <h3>Profile Details</h3>
+      <p><strong>Name:</strong> <span id="displayName"></span></p>
+      <p><strong>Gender:</strong> <span id="displayGender"></span></p>
+      <p><strong>Photo:</strong><br/><img id="displayPhoto" src="" alt="Profile Photo" style="max-width: 150px; border-radius: 8px;" /></p>
+      <p><strong>Delivery Address:</strong> <span id="displayAddress"></span></p>
+      <button id="editProfileBtn">Edit Profile</button>
+    </div>
+    <div id="message"></div>
+  </div>
+
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <!-- Firebase Database -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <script>
+      const firebaseConfig = {
+    apiKey: "AIzaSyCXdyiJmfEFPCQJwwjRDQfXt9RIKLTRpxU",
+    authDomain: "amazom-d71c3.firebaseapp.com",
+    projectId: "amazom-d71c3",
+    storageBucket: "amazom-d71c3.firebasestorage.app",
+    messagingSenderId: "1001190970236",
+    appId: "1:1001190970236:web:625930553721a5fcba8af9",
+    measurementId: "G-8CE41Q0YXC"
+  };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    const profileForm = document.getElementById('profileForm');
+    const messageDiv = document.getElementById('message');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const profileDisplay = document.getElementById('profileDisplay');
+    const displayName = document.getElementById('displayName');
+    const displayGender = document.getElementById('displayGender');
+    const displayPhoto = document.getElementById('displayPhoto');
+    const displayAddress = document.getElementById('displayAddress');
+    const editProfileBtn = document.getElementById('editProfileBtn');
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        // First try localStorage cache for instant display
+        const localProfRaw = localStorage.getItem('user_profile_' + user.uid);
+        if (localProfRaw) {
+          try {
+            const data = JSON.parse(localProfRaw);
+            profileForm.name.value = data.name || '';
+            profileForm.gender.value = data.gender || '';
+            profileForm.photoUrl.value = data.photoUrl || '';
+            profileForm.address.value = data.address || '';
+            profileForm.style.display = 'none';
+            displayName.textContent = data.name || '';
+            displayGender.textContent = data.gender || '';
+            displayAddress.textContent = data.address || '';
+            if (data.photoUrl) {
+              displayPhoto.src = data.photoUrl;
+              displayPhoto.style.display = 'block';
+            } else {
+              displayPhoto.style.display = 'none';
+            }
+            profileDisplay.style.display = 'block';
+          } catch(e) {}
+        }
+
+        const userRef = database.ref('users/' + user.uid);
+        userRef.once('value').then(snapshot => {
+          const data = snapshot.val();
+          if (data) {
+            localStorage.setItem('user_profile_' + user.uid, JSON.stringify(data));
+            profileForm.name.value = data.name || '';
+            profileForm.gender.value = data.gender || '';
+            profileForm.photoUrl.value = data.photoUrl || '';
+            profileForm.address.value = data.address || '';
+            // Show profile display and hide form
+            profileForm.style.display = 'none';
+            displayName.textContent = data.name || '';
+            displayGender.textContent = data.gender || '';
+            displayAddress.textContent = data.address || '';
+            if (data.photoUrl) {
+              displayPhoto.src = data.photoUrl;
+              displayPhoto.style.display = 'block';
+            } else {
+              displayPhoto.style.display = 'none';
+            }
+            profileDisplay.style.display = 'block';
+          } else if (!localProfRaw) {
+            profileForm.style.display = 'block';
+            profileDisplay.style.display = 'none';
+          }
+        }).catch(() => {
+          if (!localProfRaw) {
+            profileForm.style.display = 'block';
+            profileDisplay.style.display = 'none';
+          }
+        });
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = auth.currentUser;
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+      const profileData = {
+        name: profileForm.name.value.trim(),
+        gender: profileForm.gender.value,
+        photoUrl: profileForm.photoUrl.value.trim(),
+        address: profileForm.address.value.trim()
+      };
+
+      // Save locally first
+      localStorage.setItem('user_profile_' + user.uid, JSON.stringify(profileData));
+      messageDiv.textContent = 'Profile saved successfully!';
+      messageDiv.style.color = 'green';
+      profileForm.style.display = 'none';
+      displayName.textContent = profileData.name;
+      displayGender.textContent = profileData.gender;
+      displayAddress.textContent = profileData.address;
+      if (profileData.photoUrl) {
+        displayPhoto.src = profileData.photoUrl;
+        displayPhoto.style.display = 'block';
+      } else {
+        displayPhoto.style.display = 'none';
+      }
+      profileDisplay.style.display = 'block';
+
+      // Attempt cloud sync
+      const userRef = database.ref('users/' + user.uid);
+      userRef.set(profileData).catch((err) => {
+        console.warn('Cloud profile sync pending:', err.message);
+      });
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => {
+        window.location.href = 'login.html';
+      });
+    });
+
+    editProfileBtn.addEventListener('click', () => {
+      profileForm.style.display = 'block';
+      profileDisplay.style.display = 'none';
+      messageDiv.textContent = '';
+    });
+    </script>
+    <script>
+      document.getElementById('backBtn').addEventListener('click', () => {
+        window.history.back();
+      });
+    </script>
+  </body>
+</html>

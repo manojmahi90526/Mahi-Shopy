@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahi Shopy E-Commerce Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="theme-toggle.css">
+  <script src="theme-toggle.js"></script>
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #0d0d15 50%, #050508 100%);
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-hover-border: rgba(255, 255, 255, 0.25);
+      --accent-user: #00f2fe;
+      --accent-user-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --accent-admin: #ff0844;
+      --accent-admin-gradient: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      overflow-x: hidden;
+    }
+
+    .background-decor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(79, 172, 254, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 8, 68, 0.06) 0%, transparent 40%);
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #38bdf8;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .badge span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #38bdf8;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #38bdf8;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-highlight {
+      letter-spacing: 0.1em;
+      font-weight: 900;
+      color: #ffffff;
+      -webkit-text-fill-color: initial;
+      text-shadow: 0 0 25px rgba(255,255,255,0.3);
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3rem auto;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2.2rem;
+      text-align: left;
+      backdrop-filter: blur(16px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .card.user-card::before {
+      background: var(--accent-user-gradient);
+    }
+
+    .card.admin-card::before {
+      background: var(--accent-admin-gradient);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .user-card .card-icon {
+      background: rgba(79, 172, 254, 0.15);
+      border: 1px solid rgba(79, 172, 254, 0.3);
+    }
+
+    .admin-card .card-icon {
+      background: rgba(255, 8, 68, 0.15);
+      border: 1px solid rgba(255, 8, 68, 0.3);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #fff;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin-bottom: 1.8rem;
+      flex-grow: 1;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary-user {
+      background: var(--accent-user-gradient);
+      color: #050508;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25);
+    }
+
+    .btn-primary-user:hover {
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary-admin {
+      background: var(--accent-admin-gradient);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(255, 8, 68, 0.25);
+    }
+
+    .btn-primary-admin:hover {
+      box-shadow: 0 6px 20px rgba(255, 8, 68, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .quick-links {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .quick-links h3 {
+      font-size: 1rem;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .links-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .chip {
+      padding: 0.45rem 0.9rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-decor"></div>
+
+  <div class="container">
+    <div class="badge">
+      <span></span> Server Live & Active
+    </div>
+
+    <h1><span class="brand-highlight">Mahi Shopy</span> Portal</h1>
+    <p class="subtitle">Select your entry point to browse the fashion catalog or manage inventory and store settings.</p>
+
+    <div class="grid">
+      <!-- User / Customer Card -->
+      <div class="card user-card">
+        <div class="card-icon">🛍️</div>
+        <h2>Customer Store</h2>
+        <p>Explore trendy men's, women's, and kids' collections, manage cart, and view customer profile.</p>
+        <div class="btn-group">
+          <a href="/user/home.html" class="btn btn-primary-user">Enter Store (Home) →</a>
+          <a href="/user/login.html" class="btn btn-secondary">Customer Login</a>
+          <a href="/user/signup.html" class="btn btn-secondary">Customer Sign Up</a>
+        </div>
+      </div>
+
+      <!-- Admin Card -->
+      <div class="card admin-card">
+        <div class="card-icon">⚙️</div>
+        <h2>Admin Dashboard</h2>
+        <p>Manage product inventories, oversee collections for boys, girls, men, and women categories.</p>
+        <div class="btn-group">
+          <a href="/admin/home.html" class="btn btn-primary-admin">Admin Dashboard →</a>
+          <a href="/admin/login.html" class="btn btn-secondary">Admin Login</a>
+          <a href="/admin/signup.html" class="btn btn-secondary">Admin Sign Up</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <h3>Direct Category Access</h3>
+      <div class="links-wrapper">
+        <a href="/user/mens_wear.html" class="chip">👔 Men's Collection</a>
+        <a href="/user/womens.html" class="chip">👗 Women's Collection</a>
+        <a href="/user/kids_boys.html" class="chip">👦 Kids (Boys)</a>
+        <a href="/user/kids_girls.html" class="chip">👧 Kids (Girls)</a>
+        <a href="/user/cart.html" class="chip">🛒 Shopping Cart</a>
+        <a href="/user/profile.html" class="chip">👤 User Profile</a>
+        <a href="/admin/mens_admin.html" class="chip">🛠️ Men Admin</a>
+        <a href="/admin/womens_admin.html" class="chip">🛠️ Women Admin</a>
+        <a href="/admin/kids_boys_admin.html" class="chip">🛠️ Kids Boys Admin</a>
+        <a href="/admin/kids_girls_admin.html" class="chip">🛠️ Kids Girls Admin</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>Mahi Shopy E-Commerce Application • Running locally on Node.js</p>
+    </footer>
+  </div>
+</body>
+</html>

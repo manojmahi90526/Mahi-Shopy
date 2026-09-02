@@ -1,0 +1,11 @@
+{
+  "name": "e-comerse",
+  "version": "1.0.0",
+  "description": "Mahi Shopy E-commerce Platform with Customer Store & Admin Dashboard",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
