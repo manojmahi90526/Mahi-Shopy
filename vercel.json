@@ -1,5 +1,16 @@
 {
-  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": ".",
   "cleanUrls": false,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/home", "destination": "/user/home.html" },
+    { "source": "/user", "destination": "/user/home.html" },
+    { "source": "/user/", "destination": "/user/home.html" },
+    { "source": "/admin", "destination": "/admin/home.html" },
+    { "source": "/admin/", "destination": "/admin/home.html" },
+    { "source": "/cart", "destination": "/user/cart.html" },
+    { "source": "/profile", "destination": "/user/profile.html" }
+  ]
 }
